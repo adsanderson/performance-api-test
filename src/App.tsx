@@ -11,7 +11,7 @@ function App() {
       performance.mark('app-end');
       const now = Date.now();
       const appLoadDuration = performance.measure('app-duration', 'app-start', 'app-end').duration;
-      console.log('App load duration:', appLoadDuration, now - window['TEST_NAMESPACE']);
+      console.log('App load duration:', appLoadDuration, now -(window.TEST_NAMESPACE || now));
     }, 30000);
 
     return () => clearTimeout(timer);

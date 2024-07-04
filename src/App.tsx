@@ -5,13 +5,16 @@ import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [x, setX] = useState([0, 0]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       performance.mark('app-end');
       const now = Date.now();
-      const appLoadDuration = performance.measure('app-duration', 'app-start', 'app-end').duration;
-      console.log('App load duration:', appLoadDuration, now -(window.TEST_NAMESPACE || now));
+      const appLoadDurationPerformance = performance.measure('app-duration', 'app-start', 'app-end').duration;
+      const appLoadDurationDate = now -(window.TEST_NAMESPACE || now)
+      console.log('App load duration:', appLoadDurationPerformance, appLoadDurationDate);
+      setX([appLoadDurationPerformance, appLoadDurationDate]);
     }, 30000);
 
     return () => clearTimeout(timer);
@@ -39,6 +42,17 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      <p>
+        window.TEST_NAMESPACE: {window.TEST_NAMESPACE}
+      </p>
+      <ul>
+        <li>
+          Performance duration: {x[0]} ms
+        </li>
+        <li>
+          Date duration: {x[1]} ms
+        </li>
+      </ul>
     </>
   )
 }
